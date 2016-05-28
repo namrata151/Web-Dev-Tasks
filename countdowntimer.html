@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>    
+                ul#timer{ padding:0px 420px}
+
+                ul#name{ padding:0px 380px;
+                                text-align:center;
+                              }
+
+                ul li{display:inline;}
+
+        .button
+              {
+                   background-color:black;
+                   border:1px solid black;
+                   padding-right:30px;
+                   padding-left:30px;
+                   padding-top:30px;
+                   padding-bottom:30px;
+                   color:white;
+                   text-align:center;
+                   display:inline-block;
+                   font-size:20px;
+                   border-radius:50%;
+              }  
+
+        p.c 
+            
+              {
+                   text-align:center;
+                   display:inline;
+                   background-color:black;
+                   color:white;
+                   padding:10px 20px;
+                   border-radius:4px 4px 0 0;
+              }
+
+         p#p01 
+             
+              {
+                  display:inline;
+                  font-size:30px;
+                  padding:0px 12px
+              }
+          div#footer
+              {
+                   background-color:#eeeeee;
+                   clear:both;
+                   padding:1px;
+                   text-align:center;
+              }
+</style>
+</head>
+
+                  <body style="background-color:violet">
+
+                  <h1 style="text-align:center;font-size:350%"><b>BOOKINGS FOR NOODLE KING</b><h1>
+                  <h2 style="text-align:center;font-size:250%">OPEN'S FROM..<h2>
+                  <center>
+                  <ul id="timer">
+                  <li><p class="c" id="days"></p></li>
+                  <li><p class="c" id="hours"></p></li>
+                  <li><p class="c" id="min"></p></li>
+                  <li><p class="c" id="sec"></p></li>
+                  </ul>
+                  </center>
+
+
+                  <center>
+                  <ul id="name">
+                  <li><p id="p01" > Days </p></li>
+                  <li><p id="p01" > Hrs</p></li>
+                  <li><p id="p01" > Min</p></li>
+                  <li><p id="p01" > Sec</p></li>
+                  </ul>
+                  </center>
+
+
+                  <center>
+                  <button  class="button" onclick="clearInterval(timeint)"> STOP </button>
+                  <button  class="button" onclick="timeint=setInterval(displayTime,1000)"> START </button>
+                  </center>
+                  <br>
+
+
+                  <center>
+                   Enter your booking date:  <input  id="datestring" type="text" value='"July 30,2016 20:00:00 "'></input>
+                  <button class="button" onclick="getdatestring()">RESET</button></center>
+
+                   <div id="footer">
+                   Caution:In the input give the month first with the first letter in capital ,give it in double coats and give a space after you have 
+                   entered the time (railway timings) as given in the example 
+                   </div>
+        <script>
+                   var d="July 30,2016 20:00:00 ";                     //default value of date string
+                   function getdatestring()
+                                           {        
+                                               d= document.getElementById("datestring").value;
+                                           }
+
+                   function getRemainingTime(d)
+                                          {
+                                               var t= Date.parse(d)-Date.now();
+                                               var sec=Math.floor((t/1000)%60)
+                                               var min=Math.floor((t/60000)%60)
+                                               var hours=Math.floor((t/3600000)%24)
+                                               var days=Math.floor(t/(3600000*24))
+
+                                            return {                                              // return the remaining time as an object
+                                                         "hours":hours,
+                                                         "days":days,
+                                                         "sec":sec,
+                                                         "min":min,
+                                                         "t":t
+                                                       };
+                                          }
+
+                       function zero(time)        // to add zeros for number less than 10
+                                         {   
+                                              if(time<10)
+                                              {return ('0'+time)}
+                                              return time;
+                                         }  
+
+                      function displayTime()
+                                         {
+                                              var y= getRemainingTime(d);
+                                             
+                                              document.getElementById("days").innerHTML=zero(y.days);
+                                              document.getElementById("hours").innerHTML=zero(y.hours);
+                                              document.getElementById("min").innerHTML=zero(y.min);
+                                              document.getElementById("sec").innerHTML=zero(y.sec);
+                                             
+                                              if(y.t<=1000)
+                                              {clearInterval(timeint);
+                                               alert("bookings open !");}
+
+                                        }
+                                   displayTime();
+                                   var timeint=setInterval(displayTime,1000);
+                      </script> 
+
+                      </body>
+                      </html>
